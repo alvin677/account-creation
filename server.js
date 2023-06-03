@@ -12,7 +12,7 @@ http.createServer(function (request, response) {
     // This is where the account creation data is taken care of.
     request.on('data', (chunk) => {
         if (request.url == "/reg") {
-            data = chunk.toString().split(','); // Received data (username, password)
+            data = chunk.toString().split(','); // Received data (username, password) and make array of it
             fs.writeFileSync('./accounts/'+data[0], JSON.stringify(data));
         }
     });
