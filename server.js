@@ -9,6 +9,7 @@ http.createServer(function (request, response) {
         filePath = './index.html';
     }
 
+    // This is where the account creation data is taken care of.
     request.on('data', (chunk) => {
         if (request.url == "/reg") {
             data = chunk.toString().split(','); // Received data (username, password)
