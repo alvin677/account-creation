@@ -1,4 +1,4 @@
-// Web server by Mozilla
+// Web server by Mozilla, important part is the 'on data' request
 
 var http = require('http');
 var fs = require('fs');
