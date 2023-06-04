@@ -15,7 +15,16 @@ http.createServer(function (request, response) {
     request.on('data', (chunk) => {
         if (request.url == "/reg") {
             data = chunk.toString().split(','); // Received data (username, password) and make array of it
-            fs.writeFileSync('./accounts/'+data[0], JSON.stringify(data));
+            email = data[0];
+            data.shift(); // Remove email from data array
+            if (!fs.existsSync('./accounts/'+email)) { // if account already doesn't exist
+                fs.writeFileSync('./accounts/'+email, JSON.stringify(data)); // store new account data
+                response.writeHead(201); // respond with success
+                response.end();
+            } else {
+                response.writeHead(400); // respond with failure
+                response.end();
+            }
         }
     });
 
@@ -43,10 +52,10 @@ http.createServer(function (request, response) {
     fs.readFile(filePath, function(error, content) {
         if (error) {
             if(error.code == 'ENOENT') {
-                fs.readFile('./404.html', function(error, content) {
+                /*fs.readFile('./404.html', function(error, content) {
                     response.writeHead(404, { 'Content-Type': 'text/html' });
                     response.end(content, 'utf-8');
-                });
+                });*/
             }
             else {
                 response.writeHead(500);
